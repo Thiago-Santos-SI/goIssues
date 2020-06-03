@@ -17,9 +17,9 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    const repositories = localStorage.getItem('repos');
+    const repositoriesStorage = localStorage.getItem('repos');
 
-    if (repositories) this.setState({ repositories: JSON.parse(repositories) });
+    if (repositoriesStorage) this.setState({ repositories: JSON.parse(repositoriesStorage) });
   }
 
   componentDidUpdate(_, prevState) {
@@ -28,6 +28,10 @@ class Main extends Component {
       localStorage.setItem('repos', JSON.stringify(repositories));
     }
   }
+
+
+
+
 
   handleInputChange = e => {
     this.setState({ newRepo: e.target.value });

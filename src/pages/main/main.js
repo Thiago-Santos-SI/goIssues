@@ -15,30 +15,22 @@ const HomePage = () => {
   const [error, setError] = useState(false)
   const [errMsg, setErrMsg] = useState('Repositrio não encontrado...')
 
-  useEffect(() =>{
-    const repositoriesStorage = localStorage.getItem('repos');
-
-    if (repositoriesStorage) {
-      setRepositories(JSON.parse(repositoriesStorage))
-    }
-
-  },[])
-
   useEffect(()=>{
     if (repositories !== repositories){
       localStorage.setItem('repos', JSON.stringify(repositories))
     }
   },[repositories])
 
-
-  /**
-  componentDidUpdate(_, prevState) {
-    const { repositories } = this.state;
-    if (prevState.repositories !== repositories) {
-      localStorage.setItem('repos', JSON.stringify(repositories));
+  useEffect(()=>{
+    const fetchRep = () =>{
+      const repositoriesStorage = localStorage.getItem('repos');
+      if (repositoriesStorage){
+        setRepositories(JSON.parse(repositoriesStorage))
+      }
     }
-  }
-   */
+    fetchRep();
+  },[setRepositories]);
+
 
   async function handleSubmit(e){
     e.preventDefault();
@@ -46,9 +38,9 @@ const HomePage = () => {
 
     const msg = 'Repositório duplicado';
     try {
-        const isExists = repositories.filter((r) => {
+        const isExists = repositories.filter((r) =>
           r.fullName === newRepo
-        });
+        );
 
         if (isExists.length > 0) throw msg;
 
